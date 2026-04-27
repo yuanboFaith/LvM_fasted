@@ -187,7 +187,7 @@ d.CI.selected %>%
   coord_cartesian(ylim = c(optimal_cost, cost.threshold.95 + diff(c(optimal_cost, cost.threshold.95)) * 0.4))
 
 
-ggsave(filename = "./plots/CI.pdf", height = 13, width = 25) 
+ggsave(filename = "./plots/CI profile_fasted.pdf", height = 10, width = 15) 
 
 
 
@@ -230,7 +230,7 @@ for (a in flux.index.net.diff) {
   
   name.r1 <- filter(reaction_data.clean, flux.index == index.r1_r2[1]) $ reactions # name of the first reaction
   name.r2 <- filter(reaction_data.clean, flux.index == index.r1_r2[2]) $ reactions # name of the second reaction
-  d.new.name.i <- tibble("flux.index" = a, "reactions" = paste0("(", name.r1, ") - \n(", name.r2, ")") ) # a data frame of new net flux to add to the optimal repeat run
+  d.new.name.i <- tibble("flux.index" = a, "reactions" = paste0("(", name.r1, ") - (", name.r2, ")") ) # a data frame of new net flux to add to the optimal repeat run
   
   reaction_data.clean <- bind_rows(reaction_data.clean, d.new.name.i) # add this new reaction name to the reaction name database
 }
@@ -378,9 +378,10 @@ func.plot.CI <- function(L.limit = 0, R.limit = 500, shiftName = 40) {
 }
 
 p.small  <- func.plot.CI(L.limit = 0,    R.limit = 500, shiftName = 40)
-p.big   <- func.plot.CI(L.limit = 500.1, R.limit = 4000, shiftName = 200)
-cowplot::plot_grid(p.small, p.big, rel_heights = c(29, 3), ncol = 1, align = "v")
-ggsave("./plots/Confidence interval_vertical.pdf", width = 12, height = 15)
+p.small
+# p.big   <- func.plot.CI(L.limit = 500.1, R.limit = 4000, shiftName = 200)
+# cowplot::plot_grid(p.small, p.big, rel_heights = c(29, 3), ncol = 1, align = "v")
+ggsave("./plots/Confidence interval_vertical.pdf", width = 10, height = 12)
 
 
 # note the tissue name and extract clean reaction name
@@ -395,4 +396,4 @@ d.CI.bounds.reactions.reduced.LvM <- d.CI.bounds.reactions.lv %>%
 
 d.CI.bounds.reactions.reduced.LvM
 
-save(d.CI.bounds.reactions.reduced.LvM, file = "6_CI_refed_portalAA.RData")
+save(d.CI.bounds.reactions.reduced.LvM, file = "6_CI_fasted.RData")
